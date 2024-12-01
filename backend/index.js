@@ -26,28 +26,28 @@ app.post("/register", (req, res) => {
   UserModel.create(req.body)
     .then((user) => {
       console.log(user); 
-      res.send(user)
+      res.status(200).send(user)
     })
     .catch((err) => {
       console.error(err);
-      res.send(err);
+      res.status(500).send(err);
     });
 });
 app.post("/todo", (req, res) => {
   const task = req.body.task;
   TodoModel.create({ task: task })
     .then((todo) => { 
-      res.json(todo); 
+      res.status(200).json(todo); 
     })
     .catch((err) => {
       console.error(err);
-      res.json(err); 
+      res.status(500).json(err); 
     });
 });
 app.get("/todo", (req, res) => {
   TodoModel.find()
     .then((todos) => {
-      res.json(todos);  
+      res.status(200).json(todos);  
     })
     .catch((err) => {
       console.error(err);
@@ -61,17 +61,17 @@ app.post("/login", (req, res) => {
     .then((user) => {
       if (user) {
         if (user.password === password) {
-          res.json("logged");
+          res.status(200).json("logged");
         } else {
-          res.json("passoward galat hai bhai");
+          res.status(200).json("passoward galat hai bhai");
         }
       } else {
-        res.json("no user found");
+        res.status(200).json("no user found");
       }
     })
     .catch((err) => {
       console.error(err);
-      res.send("Error logging in");
+      res.status(500).send("Error logging in");
     });
 });
 
@@ -79,11 +79,11 @@ app.post("/login", (req, res) => {
 app.get("/register", (req, res) => {
   UserModel.find()
     .then((users) => {
-      res.json({ users });
+      res.status(200).json({ users });
     })
     .catch((err) => {
       console.error(err);
-      res.send(err);
+      res.status(500).send(err);
     });
 });
 
@@ -93,11 +93,11 @@ app.delete("/todo/:id", (req, res) => {
 
   TodoModel.findByIdAndDelete(id)
     .then(() => {
-      res.send("Task deleted successfully");
+      res.status(200).send("Task deleted successfully");
     })
     .catch((err) => {
       console.error(err);
-      res.send("Error deleting task");
+      res.status(500).send("Error deleting task");
     });
 });
 
